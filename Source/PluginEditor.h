@@ -29,5 +29,15 @@ private:
     // access the processor object that created it.
     HypoflatAudioProcessor& audioProcessor;
 
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>
+
+        sliderAtt_strength,
+        sliderAtt_fft_order,
+        sliderAtt_oversample;
+
+    juce::Slider mSldStrength;
+    juce::Slider mSldFftOrder;
+    juce::Slider mSldOversample;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HypoflatAudioProcessorEditor)
 };

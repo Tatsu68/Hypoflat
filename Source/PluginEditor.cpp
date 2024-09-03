@@ -13,13 +13,29 @@
 HypoflatAudioProcessorEditor::HypoflatAudioProcessorEditor (HypoflatAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
+
+    mSldStrength.setBounds(50, 50, 200, 200);
+    mSldStrength.setTextBoxStyle(juce::Slider::NoTextBox, false, 0,0);
+    mSldStrength.setSliderStyle(juce::Slider::RotaryVerticalDrag);
+    addAndMakeVisible(mSldStrength);
+
+
+    sliderAtt_strength = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
+        audioProcessor.apvts, "strength", mSldStrength);
+    sliderAtt_fft_order = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
+        audioProcessor.apvts, "fft_order", mSldFftOrder);
+    sliderAtt_oversample = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
+        audioProcessor.apvts, "oversample", mSldOversample);
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (400, 300);
+    setSize (300, 300);
 }
 
 HypoflatAudioProcessorEditor::~HypoflatAudioProcessorEditor()
 {
+    sliderAtt_strength.reset();
+    sliderAtt_fft_order.reset();
+    sliderAtt_oversample.reset();
 }
 
 //==============================================================================
@@ -30,7 +46,7 @@ void HypoflatAudioProcessorEditor::paint (juce::Graphics& g)
 
     g.setColour (juce::Colours::white);
     g.setFont (juce::FontOptions (15.0f));
-    g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
+    g.drawFittedText ("FUCK HYPERTRANCE", getLocalBounds(), juce::Justification::centred, 1);
 }
 
 void HypoflatAudioProcessorEditor::resized()

@@ -19,6 +19,8 @@ HypoflatAudioProcessor::HypoflatAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
+                       ), apvts(
+                           *this, nullptr, "Parameters", createParameters()
                        )
 #endif
 {
@@ -93,8 +95,7 @@ void HypoflatAudioProcessor::changeProgramName (int index, const juce::String& n
 //==============================================================================
 void HypoflatAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Use this method as the place to do any pre-playback
-    // initialisation that you need..
+    checkAndResetFreqEngine(true);
 }
 
 void HypoflatAudioProcessor::releaseResources()
@@ -135,27 +136,21 @@ void HypoflatAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-    // In case we have more outputs than inputs, this code clears any output
-    // channels that didn't contain input data, (because these aren't
-    // guaranteed to be empty - they may contain garbage).
-    // This is here to avoid people getting screaming feedback
-    // when they first compile a plugin, but obviously you don't need to keep
-    // this code if your algorithm always overwrites all the output channels.
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
-    // This is the place where you'd normally do the guts of your plugin's
-    // audio processing...
-    // Make sure to reset the state if your inner loop is processing
-    // the samples and the outer loop is handling the channels.
-    // Alternatively, you can process the samples with the channels
-    // interleaved by keeping the same state.
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         auto* channelData = buffer.getWritePointer (channel);
 
         // ..do something to the data...
     }
+
+    checkAndResetFreqEngine(false);
+    float strength = apvts.getParameterAsValue("strength").getValue();
+    mEngine->setStrength(strength);
+    if (strength > 0.5)
+        mEngine->process(buffer.getArrayOfWritePointers(), buffer.getNumSamples());
 }
 
 //==============================================================================
@@ -170,17 +165,60 @@ juce::AudioProcessorEditor* HypoflatAudioProcessor::createEditor()
 }
 
 //==============================================================================
-void HypoflatAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
+void HypoflatAudioProcessor::getStateInformation(juce::MemoryBlock& destData)
 {
-    // You should use this method to store your parameters in the memory block.
-    // You could do that either as raw data, or use the XML or ValueTree classes
-    // as intermediaries to make it easy to save and load complex data.
+    auto state = apvts.copyState();
+    std::unique_ptr<juce::XmlElement> xml(state.createXml());
+    copyXmlToBinary(*xml, destData);
 }
 
-void HypoflatAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
+void HypoflatAudioProcessor::setStateInformation(const void* data, int sizeInBytes)
 {
-    // You should use this method to restore your parameters from this memory block,
-    // whose contents will have been created by the getStateInformation() call.
+    std::unique_ptr<juce::XmlElement> xmlState(getXmlFromBinary(data, sizeInBytes));
+    if (xmlState.get() != nullptr)
+        if (xmlState->hasTagName(apvts.state.getType()))
+            apvts.replaceState(juce::ValueTree::fromXml(*xmlState));
+    auto mb = juce::MidiBuffer();
+}
+
+juce::AudioProcessorValueTreeState::ParameterLayout HypoflatAudioProcessor::createParameters()
+{
+    std::vector<std::unique_ptr<juce::RangedAudioParameter>> params;
+
+    // non-modified
+    params.push_back(std::make_unique<juce::AudioParameterChoice>(
+        "fft_order",
+        "FFT Order",
+        choiceItems_fftOrder,
+        3));
+
+    params.push_back(std::make_unique<juce::AudioParameterChoice>(
+        "oversample",
+        "Oversample",
+        choiceItems_oversample,
+        0));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(
+        "strength",
+        "Strength",
+        0.0f,
+        1.0f,
+        0.0f));
+    return { params.begin(), params.end() };
+}
+
+void HypoflatAudioProcessor::checkAndResetFreqEngine(bool alwaysReset)
+{
+    int shiftFft = apvts.getParameterAsValue("fft_order").getValue();
+    int shiftOs = apvts.getParameterAsValue("oversample").getValue();
+    int size = 256 << shiftFft;
+    int os = 1 << shiftOs;
+    bool check = (mFftSize != size) || (mOversample != os);
+    check = check || alwaysReset;
+    setLatencySamples(size);
+    mFftSize = size;
+    mOversample = os;
+    if (check)
+        mEngine = std::make_unique < FreqEngine>(size, getSampleRate() * os);
 }
 
 //==============================================================================

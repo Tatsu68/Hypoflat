@@ -9,7 +9,7 @@
 #pragma once
 
 #include <JuceHeader.h>
-
+#include "FreqEngine.h"
 //==============================================================================
 /**
 */
@@ -20,6 +20,11 @@ public:
     HypoflatAudioProcessor();
     ~HypoflatAudioProcessor() override;
 
+    juce::AudioProcessorValueTreeState apvts;
+    inline static const juce::StringArray choiceItems_fftOrder = { "256","512","1024","2048","4096","8192","16384"};
+    inline static const juce::StringArray choiceItems_oversample = { "1x", "2x", "4x" };
+    
+    
     //==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
@@ -54,6 +59,15 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
 private:
+    int mFftSize = 0;
+    int mOversample = 0;
+
+    std::unique_ptr<FreqEngine> mEngine;
+
+    juce::AudioProcessorValueTreeState::ParameterLayout createParameters();
+
+    void checkAndResetFreqEngine(bool alwaysReset);
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HypoflatAudioProcessor)
 };

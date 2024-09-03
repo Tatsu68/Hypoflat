@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="Zmgnk5" name="Hypoflat" projectType="audioplug" useAppConfig="0"
-              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1">
+              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" cppLanguageStandard="20">
   <MAINGROUP id="rWqZVT" name="Hypoflat">
+    <GROUP id="{D2E99A37-15CC-5B3B-5C8C-4AB1B5A54302}" name="kissfft">
+      <FILE id="NjkJo8" name="_kiss_fft_guts.h" compile="0" resource="0"
+            file="kissfft/_kiss_fft_guts.h"/>
+      <FILE id="tOJxNp" name="kfc.c" compile="1" resource="0" file="kissfft/kfc.c"/>
+      <FILE id="t6RLZ2" name="kfc.h" compile="0" resource="0" file="kissfft/kfc.h"/>
+      <FILE id="SM1iy3" name="kiss_fft.c" compile="1" resource="0" file="kissfft/kiss_fft.c"/>
+      <FILE id="EwVY5Y" name="kiss_fft.h" compile="0" resource="0" file="kissfft/kiss_fft.h"/>
+      <FILE id="O9cuk4" name="kiss_fft_log.h" compile="0" resource="0" file="kissfft/kiss_fft_log.h"/>
+      <FILE id="CRUbrz" name="kiss_fftnd.c" compile="1" resource="0" file="kissfft/kiss_fftnd.c"/>
+      <FILE id="uu3PYQ" name="kiss_fftnd.h" compile="0" resource="0" file="kissfft/kiss_fftnd.h"/>
+      <FILE id="l9bwVo" name="kiss_fftndr.c" compile="1" resource="0" file="kissfft/kiss_fftndr.c"/>
+      <FILE id="hqW1Mm" name="kiss_fftndr.h" compile="0" resource="0" file="kissfft/kiss_fftndr.h"/>
+      <FILE id="OnV1hg" name="kiss_fftr.c" compile="1" resource="0" file="kissfft/kiss_fftr.c"/>
+      <FILE id="v5O2F0" name="kiss_fftr.h" compile="0" resource="0" file="kissfft/kiss_fftr.h"/>
+      <FILE id="t6Lf9m" name="kissfft-config.cmake.in" compile="0" resource="1"
+            file="kissfft/kissfft-config.cmake.in"/>
+      <FILE id="UajewN" name="kissfft.hh" compile="0" resource="0" file="kissfft/kissfft.hh"/>
+      <FILE id="p7EaoB" name="kissfft.pc.in" compile="0" resource="1" file="kissfft/kissfft.pc.in"/>
+      <FILE id="YxHh6g" name="kissfft_i32.hh" compile="0" resource="0" file="kissfft/kissfft_i32.hh"/>
+    </GROUP>
     <GROUP id="{488FE3B3-E13C-594E-4D1D-637D050D5749}" name="Source">
+      <FILE id="zk1AUu" name="FftWindow.h" compile="0" resource="0" file="Source/FftWindow.h"/>
+      <FILE id="XOPo7h" name="MathUtils.h" compile="0" resource="0" file="Source/MathUtils.h"/>
+      <FILE id="hxrKlO" name="FreqEngine.cpp" compile="1" resource="0" file="Source/FreqEngine.cpp"/>
+      <FILE id="VYbGsp" name="FreqEngine.h" compile="0" resource="0" file="Source/FreqEngine.h"/>
       <FILE id="UOH2ba" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="EREG2N" name="PluginProcessor.h" compile="0" resource="0"
