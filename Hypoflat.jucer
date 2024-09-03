@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="Zmgnk5" name="Hypoflat" projectType="audioplug" useAppConfig="0"
-              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" cppLanguageStandard="20">
+              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" cppLanguageStandard="20"
+              pluginName="Hypoflat" pluginManufacturer="Kolaa" pluginManufacturerCode="Klaa"
+              pluginCode="Hpfl" bundleIdentifier="com.Kolaa.Hypoflat" aaxIdentifier="com.Kolaa.Hypoflat"
+              pluginVST3Category="Dynamics,Fx">
   <MAINGROUP id="rWqZVT" name="Hypoflat">
     <GROUP id="{D2E99A37-15CC-5B3B-5C8C-4AB1B5A54302}" name="kissfft">
       <FILE id="NjkJo8" name="_kiss_fft_guts.h" compile="0" resource="0"

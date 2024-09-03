@@ -148,9 +148,11 @@ void HypoflatAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 
     checkAndResetFreqEngine(false);
     float strength = apvts.getParameterAsValue("strength").getValue();
-    mEngine->setStrength(strength);
-    if (strength > 0.5)
-        mEngine->process(buffer.getArrayOfWritePointers(), buffer.getNumSamples());
+    mEngine->setParams(FreqEngine::Params{
+        strength
+        });
+    //if (strength > 0.5) mEngine->process(buffer.getArrayOfWritePointers(), buffer.getNumSamples());
+    mEngine->process(buffer.getArrayOfWritePointers(), buffer.getNumSamples());
 }
 
 //==============================================================================

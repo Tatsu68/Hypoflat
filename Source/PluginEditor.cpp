@@ -46,7 +46,8 @@ void HypoflatAudioProcessorEditor::paint (juce::Graphics& g)
 
     g.setColour (juce::Colours::white);
     g.setFont (juce::FontOptions (15.0f));
-    g.drawFittedText ("FUCK HYPERTRANCE", getLocalBounds(), juce::Justification::centred, 1);
+    g.drawFittedText(juce::String("Hypo Hype\nb - ") + juce::String(__DATE__) + "\n" + juce::String(__TIME__), getLocalBounds(), juce::Justification::centred, 1);
+    //g.drawFittedText (__TIME__, getLocalBounds(), juce::Justification::centred, 1);
 }
 
 void HypoflatAudioProcessorEditor::resized()
