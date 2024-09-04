@@ -148,8 +148,10 @@ void HypoflatAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 
     checkAndResetFreqEngine(false);
     float strength = apvts.getParameterAsValue("strength").getValue();
+    float pink = apvts.getParameterAsValue("pink").getValue();
     mEngine->setParams(FreqEngine::Params{
-        strength
+        strength,
+        pink,
         });
     //if (strength > 0.5) mEngine->process(buffer.getArrayOfWritePointers(), buffer.getNumSamples());
     mEngine->process(buffer.getArrayOfWritePointers(), buffer.getNumSamples());
@@ -187,7 +189,6 @@ juce::AudioProcessorValueTreeState::ParameterLayout HypoflatAudioProcessor::crea
 {
     std::vector<std::unique_ptr<juce::RangedAudioParameter>> params;
 
-    // non-modified
     params.push_back(std::make_unique<juce::AudioParameterChoice>(
         "fft_order",
         "FFT Order",
@@ -202,6 +203,12 @@ juce::AudioProcessorValueTreeState::ParameterLayout HypoflatAudioProcessor::crea
     params.push_back(std::make_unique<juce::AudioParameterFloat>(
         "strength",
         "Strength",
+        0.0f,
+        1.0f,
+        0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(
+        "pink",
+        "pink",
         0.0f,
         1.0f,
         0.0f));

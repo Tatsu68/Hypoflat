@@ -71,7 +71,6 @@ void FreqEngine::process(float* const* data, const int n)
 				tmpAmp[i] = sqrtf(tmpAmp[i]);
 			}
 			// [end]
-
 			for (int i = 0; i < kNumChannels; i++) {
 				kiss_fftr(mCfgFft, mMainBuf[i], fftArrFreq[i]);
 				// [custom pass 1]
@@ -86,7 +85,9 @@ void FreqEngine::process(float* const* data, const int n)
 			// fft rev
 			for (int i = 0; i < kNumChannels; i++) {
 				kiss_fftri(mCfgIfft, fftArrFreq[i], mMainBuf[i]);
-				for (int j = 0; j < mFftSize; j++) mMainBuf[i][j] /= mFftSize; // kiss fft scale
+				for (int j = 0; j < mFftSize; j++) {
+					mMainBuf[i][j] /= mFftSize; 
+				} // kiss fft scale
 			}
 			// [post time pass]
 			for (int i = 0; i < kNumChannels; i++) {
@@ -100,6 +101,7 @@ void FreqEngine::process(float* const* data, const int n)
 					tmpNew /= mFftSize;
 					tmpNew = sqrtf(tmpNew);
 					tmpNew /= tmpOrig;
+					if (apprEq0(tmpNew) || std::isnan(tmpNew)) continue;
 					for (int j = 0; j < mFftSize; j++) {
 						mMainBuf[i][j] /= tmpNew;
 					}
@@ -147,6 +149,7 @@ void FreqEngine::procFlatten(kiss_fft_cpx* data)
 		dyn[i] = log2f(getComplexMag(data[i].r, data[i].i));
 	}
 	float strength = mParams.strength;
+	float pink = mParams.pink;
 	float strabs = abs(strength);
 	// calculate values!
 	int ker = mFftSize / 4;
@@ -177,6 +180,10 @@ void FreqEngine::procFlatten(kiss_fft_cpx* data)
 	}
 	gaussian(dyn.data(), mFreqDomainSize, ker, sig);
 	for (int i = 0; i < mFreqDomainSize; i++) {
+		float tiltVal = (float)mSampleRate * ((float)(i <= 0? 1:i) /(float) mFftSize);
+		tiltVal = 1000. / tiltVal;
+		tiltVal = log2f(tiltVal) / 2. * pink;
+		dyn[i] += tiltVal;
 		dyn[i] *= powf(strabs
 			, 0.5f) * (strength < 0 ? -1.f : 1.f);
 		data[i] = resizeCpx(data[i], exp2f(dyn[i]));

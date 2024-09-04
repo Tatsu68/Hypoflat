@@ -11,6 +11,7 @@ class FreqEngine
 public:
 	struct Params {
 		float strength = 0.0f;
+		float pink = 0.0f;
 	};
 	FreqEngine(const int fftSize, const double sampleRate);
 	~FreqEngine();
