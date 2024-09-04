@@ -56,7 +56,7 @@ inline const kiss_fft_cpx rotate2D(kiss_fft_cpx cpx, kiss_fft_scalar rad) {
     auto y = cpx.i;
     auto cs = cos(rad);
     auto sn = sin(rad);
-    return kiss_fft_cpx(x * cs - y * sn, x * sn + y * cs);
+    return kiss_fft_cpx{x * cs - y * sn, x * sn + y * cs};
 }
 
 inline const kiss_fft_cpx remap(float x, kiss_fft_cpx a, kiss_fft_cpx b) {

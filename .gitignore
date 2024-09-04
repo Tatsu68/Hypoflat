@@ -34,3 +34,4 @@
 # Juce
 JuceLibraryCode/
 Builds/
+.DS_Store
