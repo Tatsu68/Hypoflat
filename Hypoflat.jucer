@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="Zmgnk5" name="Hypoflat" projectType="audioplug" useAppConfig="0"
+              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" cppLanguageStandard="20"
+              pluginName="Hypoflat" pluginManufacturer="Kolaa" pluginManufacturerCode="Klaa"
+              pluginCode="Hpfl" bundleIdentifier="com.Kolaa.Hypoflat" aaxIdentifier="com.Kolaa.Hypoflat"
+              pluginVST3Category="Dynamics,Fx" version="0.1.1" companyWebsite="k.ior.works"
+              companyName="Kolaa" companyEmail="kolaamusic@gmail.com" companyCopyright="2024">
+  <MAINGROUP id="rWqZVT" name="Hypoflat">
+    <GROUP id="{D2E99A37-15CC-5B3B-5C8C-4AB1B5A54302}" name="kissfft">
+      <FILE id="NjkJo8" name="_kiss_fft_guts.h" compile="0" resource="0"
+            file="kissfft/_kiss_fft_guts.h"/>
+      <FILE id="tOJxNp" name="kfc.c" compile="1" resource="0" file="kissfft/kfc.c"/>
+      <FILE id="t6RLZ2" name="kfc.h" compile="0" resource="0" file="kissfft/kfc.h"/>
+      <FILE id="SM1iy3" name="kiss_fft.c" compile="1" resource="0" file="kissfft/kiss_fft.c"/>
+      <FILE id="EwVY5Y" name="kiss_fft.h" compile="0" resource="0" file="kissfft/kiss_fft.h"/>
+      <FILE id="O9cuk4" name="kiss_fft_log.h" compile="0" resource="0" file="kissfft/kiss_fft_log.h"/>
+      <FILE id="CRUbrz" name="kiss_fftnd.c" compile="1" resource="0" file="kissfft/kiss_fftnd.c"/>
+      <FILE id="uu3PYQ" name="kiss_fftnd.h" compile="0" resource="0" file="kissfft/kiss_fftnd.h"/>
+      <FILE id="l9bwVo" name="kiss_fftndr.c" compile="1" resource="0" file="kissfft/kiss_fftndr.c"/>
+      <FILE id="hqW1Mm" name="kiss_fftndr.h" compile="0" resource="0" file="kissfft/kiss_fftndr.h"/>
+      <FILE id="OnV1hg" name="kiss_fftr.c" compile="1" resource="0" file="kissfft/kiss_fftr.c"/>
+      <FILE id="v5O2F0" name="kiss_fftr.h" compile="0" resource="0" file="kissfft/kiss_fftr.h"/>
+      <FILE id="t6Lf9m" name="kissfft-config.cmake.in" compile="0" resource="1"
+            file="kissfft/kissfft-config.cmake.in"/>
+      <FILE id="UajewN" name="kissfft.hh" compile="0" resource="0" file="kissfft/kissfft.hh"/>
+      <FILE id="p7EaoB" name="kissfft.pc.in" compile="0" resource="1" file="kissfft/kissfft.pc.in"/>
+      <FILE id="YxHh6g" name="kissfft_i32.hh" compile="0" resource="0" file="kissfft/kissfft_i32.hh"/>
+    </GROUP>
+    <GROUP id="{488FE3B3-E13C-594E-4D1D-637D050D5749}" name="Source">
+      <FILE id="zk1AUu" name="FftWindow.h" compile="0" resource="0" file="Source/FftWindow.h"/>
+      <FILE id="XOPo7h" name="MathUtils.h" compile="0" resource="0" file="Source/MathUtils.h"/>
+      <FILE id="hxrKlO" name="FreqEngine.cpp" compile="1" resource="0" file="Source/FreqEngine.cpp"/>
+      <FILE id="VYbGsp" name="FreqEngine.h" compile="0" resource="0" file="Source/FreqEngine.h"/>
+      <FILE id="UOH2ba" name="PluginProcessor.cpp" compile="1" resource="0"
+            file="Source/PluginProcessor.cpp"/>
+      <FILE id="EREG2N" name="PluginProcessor.h" compile="0" resource="0"
+            file="Source/PluginProcessor.h"/>
+      <FILE id="c6UUXF" name="PluginEditor.cpp" compile="1" resource="0"
+            file="Source/PluginEditor.cpp"/>
+      <FILE id="MZF9Xg" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+    </GROUP>
+  </MAINGROUP>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"
+            useGlobalPath="0"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+  </MODULES>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
+  <EXPORTFORMATS>
+    <VS2022 targetFolder="Builds/VisualStudio2022">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="Hypoflat"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="Hypoflat"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2022>
+    <XCODE_MAC targetFolder="Builds/MacOSX">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug"/>
+        <CONFIGURATION isDebug="0" name="Release"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="JUCE/modules"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
+  </EXPORTFORMATS>
+</JUCERPROJECT>
