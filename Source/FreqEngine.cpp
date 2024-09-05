@@ -102,6 +102,9 @@ void FreqEngine::process(float* const* data, const int n)
 					tmpNew = sqrtf(tmpNew);
 					tmpNew /= tmpOrig;
 					if (apprEq0(tmpNew) || std::isnan(tmpNew)) continue;
+					if (mParams.agc < 1.) {
+						tmpNew = exp2f(log2f(tmpNew) * mParams.agc);
+					}
 					for (int j = 0; j < mFftSize; j++) {
 						mMainBuf[i][j] /= tmpNew;
 					}
@@ -131,7 +134,7 @@ void FreqEngine::process(float* const* data, const int n)
 
 // [custom]
 
-void FreqEngine::setParams(Params params)
+void FreqEngine::setParams(const Params &params)
 {
 	mParams = params;
 }
@@ -150,6 +153,7 @@ void FreqEngine::procFlatten(kiss_fft_cpx* data)
 	}
 	float strength = mParams.strength;
 	float pink = mParams.pink;
+	float soften = mParams.soften;
 	float strabs = abs(strength);
 	// calculate values!
 	int ker = mFftSize / 4;
@@ -158,6 +162,7 @@ void FreqEngine::procFlatten(kiss_fft_cpx* data)
 		* (1.0f - strabs) +
 		0.0f
 		* strabs;
+	sig += 4. * soften;
 	sig = exp2f(sig);
 	// avg
 	float avg = 0;

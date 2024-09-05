@@ -90,7 +90,6 @@ inline const kiss_fft_cpx resizeCpx(const kiss_fft_cpx& x, float m) {
     return c;
 }
 
-
 //Gaussian 
 inline std::vector <float> generateGaussianKernel(int kernelSize, float sigma) {
     std::vector< float> kernel(kernelSize);

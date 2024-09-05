@@ -32,12 +32,16 @@ private:
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>
 
         sliderAtt_strength,
-        sliderAtt_fft_order,
-        sliderAtt_oversample;
-
+        sliderAtt_pink,
+        sliderAtt_agc,
+        sliderAtt_soften;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment>
+        comboAtt_fft_order;
     juce::Slider mSldStrength;
-    juce::Slider mSldFftOrder;
-    juce::Slider mSldOversample;
+    juce::Slider mSldPink;
+    juce::Slider mSldAgc;
+    juce::Slider mSldSoften;
+    juce::ComboBox mCmbFftOrder;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HypoflatAudioProcessorEditor)
 };

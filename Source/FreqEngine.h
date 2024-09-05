@@ -12,13 +12,15 @@ public:
 	struct Params {
 		float strength = 0.0f;
 		float pink = 0.0f;
+		float agc = 1.0f;
+		float soften = 0.0f;
 	};
 	FreqEngine(const int fftSize, const double sampleRate);
 	~FreqEngine();
 	void process(float* const* data, const int n);
 
 	// [custom]
-	void setParams(const Params params);
+	void setParams(const Params &params);
 	Params getParams();
 
 private:
