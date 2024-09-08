@@ -35,3 +35,4 @@
 JuceLibraryCode/
 Builds/
 .DS_Store
+.vscode

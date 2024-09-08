@@ -4,7 +4,7 @@
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" cppLanguageStandard="20"
               pluginName="Hypoflat" pluginManufacturer="Kolaa" pluginManufacturerCode="Klaa"
               pluginCode="Hpfl" bundleIdentifier="com.Kolaa.Hypoflat" aaxIdentifier="com.Kolaa.Hypoflat"
-              pluginVST3Category="Dynamics,Fx" version="0.1.1" companyWebsite="k.ior.works"
+              pluginVST3Category="Dynamics,Fx" version="0.2.0" companyWebsite="k.ior.works"
               companyName="Kolaa" companyEmail="kolaamusic@gmail.com" companyCopyright="2024">
   <MAINGROUP id="rWqZVT" name="Hypoflat">
     <GROUP id="{D2E99A37-15CC-5B3B-5C8C-4AB1B5A54302}" name="kissfft">
