@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <vector>
 #include "../kissfft/kiss_fftr.h"
+#include <Eigen/Dense>
 
 #define PI 3.14159265359
 #define TAU 6.28318530718
@@ -91,7 +92,7 @@ inline const kiss_fft_cpx resizeCpx(const kiss_fft_cpx& x, float m) {
 }
 
 //Gaussian 
-inline std::vector <float> generateGaussianKernel(int kernelSize, float sigma) {
+inline Eigen::VectorXf generateGaussianKernel(int kernelSize, float sigma) {
     std::vector< float> kernel(kernelSize);
     float sum = 0.0;
     int halfSize = kernelSize / 2;
@@ -106,24 +107,23 @@ inline std::vector <float> generateGaussianKernel(int kernelSize, float sigma) {
         kernel[i] /= sum;
     }
 
-    return kernel;
+    return 
+        Eigen::Map<Eigen::VectorXf>(kernel.data(), kernelSize);
 }
 
 inline void gaussian(float* data, const int dataSize, const int kernelSize, const float sigma) {
     auto kernel = generateGaussianKernel(kernelSize, sigma);
+    auto result = Eigen::VectorXf(dataSize);
+    result.setZero();
     int halfSize = kernelSize / 2;
-    std::vector<float> result(dataSize, 0.0f);
 
-    for (int i = 0; i < dataSize; ++i) {
-        float sum = 0.0f;
-        for (int j = 0; j < kernelSize; ++j) {
-            int index = i + j - halfSize;
-            if (index >= 0 && index < dataSize) {
-                sum += data[index] * kernel[j];
-            }
-        }
-        result[i] = sum;
+    auto ext = Eigen::VectorXf(kernelSize + dataSize);
+    ext.setZero();
+    ext.segment(halfSize, dataSize) = Eigen::Map<Eigen::VectorXf>(data, dataSize);
+    //memcpy(ext.data() + halfSize, data, sizeof(float) * dataSize);
+
+    for (int i = 0; i < kernelSize; i++) {
+        result += ext.segment(i, dataSize) * kernel[i];
     }
     memcpy(data, result.data(), sizeof(float) * dataSize);
-
 }
